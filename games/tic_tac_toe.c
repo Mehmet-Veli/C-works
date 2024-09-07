@@ -174,18 +174,20 @@ void doublemode()
     {
         k = 0;
 
-        printf("PLAYER1 - where would you like to place 'x' : ");
-        scanf("%d", &m);
+	if(x%2==0)	//Both player are filling choice at different time one by one
+	{
+        	printf("PLAYER1 - where would you like to place 'x' : ");
+        	scanf("%d", &m);
 
-        placex(m);
-        if(doublemode_table_count<4)
-        {
-        printf("PLAYER2 - where would you like to place 'o' : ");
-        scanf("%d", &e1);
+        	placex(m);	//done
+	}
+	else 
+	{
+	        printf("PLAYER2 - where would you like to place 'o' : ");
+        	scanf("%d", &e1);
 
-        placey(e1);
-        }
-
+        	placey(e1);
+	}
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -212,7 +214,7 @@ void doublemode()
 
             break;
         }
-        if (doublemode_table_count==4)
+        if (doublemode_table_count==9)		//if all place are filled then Its Draw Case
         {
             printf("\nDRAW ");
             break;
@@ -303,14 +305,14 @@ void place()
  *
  * @returns None
  */
-void placey(int e1)
+void placey(int m)
 {
     int n1 = 0;
-    if (e1 >= 1 && e1 <= 9)
+    if (m >= 1 && m <= 9)
     {
-        if (game_table[e1 - 1] != 'x' && game_table[e1 - 1] != 'o')
+        if (game_table[m - 1] != 'x' && game_table[m - 1] != 'o')
         {
-            game_table[e1 - 1] = 'o';
+            game_table[m - 1] = 'o';
         }
         else
         {
