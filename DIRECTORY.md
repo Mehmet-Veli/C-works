@@ -201,6 +201,7 @@
   * [Lcm](https://github.com/TheAlgorithms/C/blob/HEAD/math/lcm.c)
   * [Lerp](https://github.com/TheAlgorithms/C/blob/HEAD/math/lerp.c)
   * [Palindrome](https://github.com/TheAlgorithms/C/blob/HEAD/math/palindrome.c)
+  * [Perfect Numbers](https://github.com/TheAlgorithms/C/blob/HEAD/math/perfect_numbers.c)
   * [Prime](https://github.com/TheAlgorithms/C/blob/HEAD/math/prime.c)
   * [Prime Factoriziation](https://github.com/TheAlgorithms/C/blob/HEAD/math/prime_factoriziation.c)
   * [Prime Sieve](https://github.com/TheAlgorithms/C/blob/HEAD/math/prime_sieve.c)
