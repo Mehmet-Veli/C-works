@@ -34,6 +34,7 @@
   * [Decimal To Octal Recursion](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/decimal_to_octal_recursion.c)
   * [Hexadecimal To Octal](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/hexadecimal_to_octal.c)
   * [Hexadecimal To Octal2](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/hexadecimal_to_octal2.c)
+  * [Hexadecimal To String](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/hexadecimal_to_string.c)
   * [Infix To Postfix](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/infix_to_postfix.c)
   * [Infix To Postfix2](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/infix_to_postfix2.c)
   * [Int To String](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/int_to_string.c)
@@ -41,6 +42,7 @@
   * [Octal To Decimal](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/octal_to_decimal.c)
   * [Octal To Hexadecimal](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/octal_to_hexadecimal.c)
   * [Roman Numerals To Decimal](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/roman_numerals_to_decimal.c)
+  * [String To Hexadecimal](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/string_to_hexadecimal.c)
   * [To Decimal](https://github.com/TheAlgorithms/C/blob/HEAD/conversions/to_decimal.c)
 
 ## Data Structures
