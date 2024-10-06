@@ -1,12 +1,13 @@
 /**
  * @file
- * @author [LJFP](https://github.com/ljfp/)
  * @brief [Timsort](https://en.wikipedia.org/wiki/Timsort) implementation
  * @details
  * Timsort is a hybrid stable sorting algorithm, derived from merge sort and
  * insertion sort, designed to perform well on many kinds of real-world data.
  * Worst-case time complexity is O(n log n).
  * Worst-case space complexity is O(n).
+ * @author [LJFP](https://github.com/ljfp/)
+ * @see merge_sort.c, insertion_sort.c
  */
 #include <assert.h>
 #include <stdio.h>
@@ -14,7 +15,7 @@
 #include <time.h>
 
 #define min(a, b) \
-    ((a) < (b) ? (a) : (b)) /* Macro to find the minimum of two numbers */
+    ((a) < (b) ? (a) : (b))
 
 /**
  * @brief Performs insertion sort on a subarray
@@ -22,7 +23,7 @@
  * @param left Starting index of the subarray
  * @param right Ending index of the subarray
  */
-void insertionSort(int arr[], int left, int right)
+void insertion_sort(int arr[], int left, int right)
 {
     for (int i = left + 1; i <= right; i++)
     {
@@ -97,7 +98,7 @@ void timsort(int arr[], int n, int run_size)
     /* Sort individual subarrays of size run_size */
     for (int i = 0; i < n; i += run_size)
     {
-        insertionSort(arr, i, min((i + run_size - 1), (n - 1)));
+        insertion_sort(arr, i, min((i + run_size - 1), (n - 1)));
     }
 
     /* Start merging from size run_size */
@@ -133,7 +134,7 @@ void test()
         arr[i] = (rand() % 1000) - 500; /* Signed random numbers */
     }
 
-    /* Test with different run sizes */
+    /* Test with different run sizes but always a power of 2 */
     for (int run_size = 16; run_size <= 64; run_size *= 2)
     {
         /* Copy the original array to preserve it for each run size */
