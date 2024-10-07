@@ -134,7 +134,7 @@ void singlemode()
             }
             if (o == -2)
             {
-                printf("YOU LOSE\n");
+                printf("YOU LOSE haha\n");
             }
 
             break;
