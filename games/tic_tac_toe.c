@@ -2,47 +2,33 @@
  * @file tic-tac-toe.c
  * @author [vivekboss99](github.com/vivekboss99)
  * @author [Krishna Vedala](https://github.com/kvedala)
- * @brief [Tic-Tac-Toe game](https://en.wikipedia.org/wiki/Tic-tac-toe)
- * implementation in C
- * @details  Tic-Tac-Toe Game, where the user can decide to play with the
- * computer(single player mode) or with other user(double player mode), the
- * code as an array named 'game_table' which is the table and user needs to enter the
- * position inside the array(from 1-9) where he/she wants to place 'X' or 'O' on the
- * table.
+ * @brief Tic-Tac-Toe game implementation in C
+ * @details Tic-Tac-Toe Game, where the user can decide to play with the
+ * computer (single player mode) or with another user (double player mode).
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
 
-// Functions Declarations
+// Function Declarations
 static void singlemode();
 static void doublemode();
-static void placex(int);  // used for placing position of X by the 1st player
-static void place();      // used by the computer to place O
-static void placey(int);  // used in Double Player mode by the 2nd player to
-                          // place the position of O
-int checkwin();  // checks everytime when a player or computer places 'X' or 'O'
+static void placex(int m); // used for placing position of X by the 1st player
+static void place();       // used by the computer to place O
+static void placey(int m); // used in Double Player mode by the 2nd player to place O
+int checkwin(); // checks every time when a player or computer places 'X' or 'O'
 
-/** Tic-Tac-Toe table, so basically we are using variable 'game_table' as the table(size:3X3) and
- * updating it regularly
- */
+// Tic-Tac-Toe table
 static char game_table[9];
 
-/**
- * Main program function.
- * @returns 0 on clean exit. 
- * @note No checks are included for program execution failures!
- */
-int main()
-{   
-    srand( (unsigned int)time(NULL));
+// Main program function
+int main() {   
+    srand((unsigned int)time(NULL));
     int l = 0;
-    do
-    {
-        int n = 0;
 
-        // filling the table with multiple asterisks
+    do {
+        // filling the table with asterisks
         for (int i = 0; i < 9; i++) game_table[i] = '*';
 
         // displaying the main menu
@@ -51,25 +37,23 @@ int main()
         printf("***************************************\n");
         printf("***********1. YOU vs COMPUTER ***********\n");
         printf("***********2. YOU vs PLAYER ***********\n");
-        printf("***********3.EXIT *********************\n");
-        printf("Enter your choice : ");
+        printf("***********3. EXIT *********************\n");
+        printf("Enter your choice: ");
+        int n;
         scanf("%d", &n);
 
-        switch (n)  // switch case to select between single player mode or
-                    // double player mode
-        {
-        case 1:
-            singlemode();
-            break;
-        case 2:
-            doublemode();
-            break;
-        default:
-            printf("THANK YOU and EXIT!");
+        switch (n) {
+            case 1:
+                singlemode();
+                break;
+            case 2:
+                doublemode();
+                break;
+            default:
+                printf("THANK YOU and EXIT!\n");
         }
 
-        printf("Next game ? : ");
-        printf("Enter 1 – YES and 0 - NO ");
+        printf("Next game? (1 - YES, 0 - NO): ");
         scanf("%d", &l);
 
     } while (l == 1);
@@ -77,373 +61,135 @@ int main()
     return 0;
 }
 
-/**
- * @brief Implementation of game vs computer
- *
- * @returns None
- */
-void singlemode()
-{
+// Single player mode
+void singlemode() {
     int m;
-    int k = 0;
-    int table_fill_count=0;
+    int table_fill_count = 0;
 
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            printf("%c ", game_table[k]);
-            k++;
-        }
-
-        printf("\n");
-    }
-
-    for (int x = 1; x < 10; x++)
-    {
-        k = 0;
-
-        printf("Where would you like to place 'x' ");
-        scanf("%d", &m);
-
-        placex(m);
-        if(table_fill_count<4)
-        {
-          place();
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                printf("%c ", game_table[k]);
-                k++;
-
+    while (table_fill_count < 9) {
+        // Displaying the game table
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                printf("%c ", game_table[i * 3 + j]);
             }
-
             printf("\n");
         }
-        table_fill_count++;
-        int o = checkwin();
 
-        if (o == -1 || o == -2)
-        {
-            if (o == -1)
-            {
-                printf("YOU WIN\n");
-            }
-            if (o == -2)
-            {
-                printf("YOU LOSE\n");
-            }
-
-            break;
-        }
-
-        if (table_fill_count==4)
-        {
-            printf("\nDRAW ");
-            break;
-        }
-    }
-}
-
-/**
- * @brief Implementation of game vs another player.
- *
- * @returns None
- */
-void doublemode()
-{
-    int m;
-    int e1;
-    int k = 0;
-    int doublemode_table_count=0;
-
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            printf("%c ", game_table[k]);
-            k++;
-        }
-
-        printf("\n");
-    }
-    for (int x = 1; x < 10; x++)
-    {
-        k = 0;
-
-        printf("PLAYER1 - where would you like to place 'x' : ");
+        printf("Where would you like to place 'X'? ");
         scanf("%d", &m);
-
         placex(m);
-        if(doublemode_table_count<4)
-        {
-        printf("PLAYER2 - where would you like to place 'o' : ");
-        scanf("%d", &e1);
 
-        placey(e1);
+        if (checkwin() == -1) {
+            printf("YOU WIN\n");
+            return;
         }
 
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                printf("%c ", game_table[k]);
-                k++;
-            }
-
-            printf("\n");
-        }
-        doublemode_table_count++;
-        int o = checkwin();
-
-        if (o == -1 || o == -2)
-        {
-            if (o == -1)
-            {
-                printf("Player 1 WIN\n");
-            }
-            if (o == -2)
-            {
-                printf("Player 2 WIN\n");
-            }
-
-            break;
-        }
-        if (doublemode_table_count==4)
-        {
-            printf("\nDRAW ");
-            break;
-        }
-    }
-}
-
-int check_placex(){
-	char input[50];
-	int n1;
-	while (1){
-		fgets(input,49,stdin);
-		if ( strlen(input) > 2 || strlen(input)  == 0){
-			fprintf(stderr,"Invalid move, Enter number 1 - 9: ");
-			continue;
-		}
-		if(sscanf(input,"%d",&n1) != 1){
-			fprintf(stderr,"Invalid move, Enter number 1 - 9: ");
-			continue;
-		} 
-		if ((game_table[n1-1] == 'x') || (game_table[n1-1]) == 'o' || (n1== 0)){
-			fprintf(stderr,"Already allocated, Enter number: ");
-			continue;
-		}
-		return n1;
-	}
-}	
-
-
-
-
-
-/**
- * @brief Update table by placing an `X`
- *
- * @param m location to place `X`
- *
- * @returns None
- */
-void placex(int m)
-{
-    int n1 = 0;
-    if (m >= 1 && m <= 9)
-    {
-        if (game_table[m - 1] != 'x' && game_table[m - 1] != 'o')
-        {
-            game_table[m - 1] = 'x';
-        }
-        else
-        {
-			int n = check_placex();
-			placex(n);
-        }
-    }
-    else
-    {
-		int n = check_placex();
-		placex(n);
-    }
-}
-/**
- * @brief Update table by placing an `O`
- *
- * @returns None
- */
-void place()
-{
-
-    int e = rand() % 9;
-
-    if (e >= 0)
-    {
-        if (game_table[e] != 'x' && game_table[e] != 'o')
-        {
-            game_table[e] = 'o';
-            printf("\n Computer placed at %d position\n", e + 1);
-        }
-        else
-        {
+        if (table_fill_count < 4) {
             place();
+            if (checkwin() == -2) {
+                printf("YOU LOSE\n");
+                return;
+            }
+        }
+
+        table_fill_count++;
+    }
+    printf("DRAW\n");
+}
+
+// Double player mode
+void doublemode() {
+    int m, e1;
+    int doublemode_table_count = 0;
+
+    while (doublemode_table_count < 9) {
+        // Displaying the game table
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                printf("%c ", game_table[i * 3 + j]);
+            }
+            printf("\n");
+        }
+
+        printf("PLAYER 1 - Where would you like to place 'X'? ");
+        scanf("%d", &m);
+        placex(m);
+        if (checkwin() == -1) {
+            printf("Player 1 WINS!\n");
+            return;
+        }
+
+        if (doublemode_table_count < 4) {
+            printf("PLAYER 2 - Where would you like to place 'O'? ");
+            scanf("%d", &e1);
+            placey(e1);
+            if (checkwin() == -2) {
+                printf("Player 2 WINS!\n");
+                return;
+            }
+        }
+
+        doublemode_table_count++;
+    }
+    printf("DRAW\n");
+}
+
+// Update table by placing an 'X'
+void placex(int m) {
+    while (1) {
+        if (m >= 1 && m <= 9 && game_table[m - 1] == '*') {
+            game_table[m - 1] = 'X';
+            break; // exit loop after a valid move
+        } else {
+            printf("Invalid move, try again! (1-9): ");
+            scanf("%d", &m);
         }
     }
 }
-/**
- * @brief Update table by placing an `O`
- *
- * @param e1 location to place `O`
- *
- * @returns None
- */
-void placey(int e1)
-{
-    int n1 = 0;
-    if (e1 >= 1 && e1 <= 9)
-    {
-        if (game_table[e1 - 1] != 'x' && game_table[e1 - 1] != 'o')
-        {
-            game_table[e1 - 1] = 'o';
+
+// Update table by placing an 'O' (computer)
+void place() {
+    int e;
+    do {
+        e = rand() % 9;
+    } while (game_table[e] != '*');
+
+    game_table[e] = 'O';
+    printf("\nComputer placed at position %d\n", e + 1);
+}
+
+// Update table by placing an 'O' (player 2)
+void placey(int e1) {
+    while (1) {
+        if (e1 >= 1 && e1 <= 9 && game_table[e1 - 1] == '*') {
+            game_table[e1 - 1] = 'O';
+            break; // exit loop after a valid move
+        } else {
+            printf("Invalid move, try again! (1-9): ");
+            scanf("%d", &e1);
         }
-        else
-        {
-			int n = check_placex();
-			placex(n);
-        }
-    }
-    else
-    {
-		int n = check_placex();
-		placex(n);
     }
 }
-/**
- * @brief Implementation of win conditon checker for 'X' or 'O' whenever the table is updated
- *
- * @returns -1: if 'X' won 
- * @returns -2: if 'O' won
- * @returns 0: if there is no win condition for 'X' or 'O' 
- */
-int checkwin()
-{
-    if (game_table[0] == game_table[1] && game_table[1] == game_table[2])
-    {
-        if (game_table[0] == 'x' && game_table[1] == 'x' &&
-            game_table[2] == 'x')
-        {
-            return -1;
-        }
 
-        if (game_table[0] == 'o' && game_table[1] == 'o' &&
-            game_table[2] == 'o')
-        {
-            return -2;
+// Check win conditions
+int checkwin() {
+    int win_conditions[8][3] = {
+        {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // Rows
+        {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // Columns
+        {0, 4, 8}, {2, 4, 6}              // Diagonals
+    };
+
+    for (int i = 0; i < 8; i++) {
+        if (game_table[win_conditions[i][0]] == 'X' &&
+            game_table[win_conditions[i][1]] == 'X' &&
+            game_table[win_conditions[i][2]] == 'X') {
+            return -1; // X wins
+        } else if (game_table[win_conditions[i][0]] == 'O' &&
+                   game_table[win_conditions[i][1]] == 'O' &&
+                   game_table[win_conditions[i][2]] == 'O') {
+            return -2; // O wins
         }
     }
-    else if (game_table[0] == game_table[4] && game_table[4] == game_table[8])
-    {
-        if (game_table[0] == 'x' && game_table[4] == 'x' &&
-            game_table[8] == 'x')
-        {
-            return -1;
-        }
-
-        if (game_table[0] == 'o' && game_table[4] == 'o' &&
-            game_table[8] == 'o')
-        {
-            return -2;
-        }
-    }
-    else if (game_table[0] == game_table[3] && game_table[3] == game_table[6])
-    {
-        if (game_table[0] == 'x' && game_table[3] == 'x' &&
-            game_table[6] == 'x')
-        {
-            return -1;
-        }
-
-        if (game_table[0] == 'o' && game_table[3] == 'o' &&
-            game_table[6] == 'o')
-        {
-            return -2;
-        }
-    }
-    else if (game_table[3] == game_table[4] && game_table[4] == game_table[5])
-    {
-        if (game_table[3] == 'x' && game_table[4] == 'x' &&
-            game_table[5] == 'x')
-        {
-            return -1;
-        }
-
-        if (game_table[3] == 'o' && game_table[4] == 'o' &&
-            game_table[5] == 'o')
-        {
-            return -2;
-        }
-    }
-    else if (game_table[6] == game_table[7] && game_table[7] == game_table[8])
-    {
-        if (game_table[6] == 'x' && game_table[7] == 'x' &&
-            game_table[8] == 'x')
-        {
-            return -1;
-        }
-
-        if (game_table[6] == 'o' && game_table[7] == 'o' &&
-            game_table[8] == 'o')
-        {
-            return -2;
-        }
-    }
-    else if (game_table[1] == game_table[4] && game_table[4] == game_table[7])
-    {
-        if (game_table[1] == 'x' && game_table[4] == 'x' &&
-            game_table[7] == 'x')
-        {
-            return -1;
-        }
-
-        if (game_table[1] == 'o' && game_table[4] == 'o' &&
-            game_table[7] == 'o')
-        {
-            return -2;
-        }
-    }
-    else if (game_table[2] == game_table[5] && game_table[5] == game_table[8])
-    {
-        if (game_table[2] == 'x' && game_table[5] == 'x' &&
-            game_table[8] == 'x')
-        {
-            return -1;
-        }
-
-        if (game_table[2] == 'o' && game_table[5] == 'o' &&
-            game_table[8] == 'o')
-        {
-            return -2;
-        }
-    }
-    else if (game_table[2] == game_table[4] && game_table[4] == game_table[6])
-    {
-        if (game_table[2] == 'x' && game_table[4] == 'x' &&
-            game_table[6] == 'x')
-        {
-            return -1;
-        }
-
-        if (game_table[2] == 'o' && game_table[4] == 'o' &&
-            game_table[6] == 'o')
-        {
-            return -2;
-        }
-    }
-    return 0;
+    return 0; // No winner
 }
+
