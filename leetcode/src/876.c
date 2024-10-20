@@ -1,19 +1,19 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
-
-struct ListNode *middleNode(struct ListNode *head)
-{
-    struct ListNode *fast, *slow;
-    fast = slow = head;
-    while (fast && fast->next)
-    {
-        slow = slow->next;
-        fast = fast->next->next;
+// Function to find the middle node of a linked list
+// this contains the edge cases also
+struct ListNode* middleNode(struct ListNode* head) {
+    // Check if the list is empty or has only one node
+    if (head == NULL || head->next == NULL) {
+        return head;
     }
-    return slow;
+
+    struct ListNode* fast = head;
+    struct ListNode* slow = head;
+
+    // Use two pointers to find the middle node
+    while (fast != NULL && fast->next != NULL) {
+        fast = fast->next->next; // Move fast pointer two steps
+        slow = slow->next;       // Move slow pointer one step
+    }
+
+    return slow; // Slow will be at the middle node
 }
