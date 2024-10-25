@@ -15,6 +15,62 @@
 #include <time.h>
 #include <string.h>
 
+//解决 placex() 和 placey() 函数中的输入验证逻辑问题，以避免无限循环
+
+// 假设有一个全局变量表示棋盘状态
+char board[3][3];
+
+// 其他函数...
+
+// 输入验证函数
+int is_valid_input(int input) {
+    return input >= 1 && input <= 9; // 检查输入是否在有效范围内
+}
+
+// 处理 X 轴输入
+int placex() {
+    int x;
+    while (1) {
+        printf("Enter position for X (1-9): ");
+        if (scanf("%d", &x) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            while(getchar() != '\n'); // 清空输入缓冲区
+            continue;
+        }
+        if (is_valid_input(x)) {
+            return x;
+        } else {
+            printf("Invalid position. Please enter a number between 1 and 9.\n");
+        }
+    }
+}
+
+// 处理 Y 轴输入
+int placey() {
+    int y;
+    while (1) {
+        printf("Enter position for Y (1-9): ");
+        if (scanf("%d", &y) != 1) {
+            printf("Invalid input. Please enter a number.\n");
+            while(getchar() != '\n'); // 清空输入缓冲区
+            continue;
+        }
+        if (is_valid_input(y)) {
+            return y;
+        } else {
+            printf("Invalid position. Please enter a number between 1 and 9.\n");
+        }
+    }
+}
+
+// 其他函数...
+
+int main() {
+    // 初始化棋盘等...
+    
+    // 游戏循环等...
+    return 0;
+}
 // Functions Declarations
 static void singlemode();
 static void doublemode();
