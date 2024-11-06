@@ -39,7 +39,8 @@ int main()
     int sockfd;
     char buffer[MAXLINE];
     char *hello = "Hello from server";
-    struct sockaddr_in servaddr, cliaddr;
+    struct sockaddr_in servaddr;
+    struct sockaddr_in cliaddr;
 
     if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
     {

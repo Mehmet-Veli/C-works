@@ -1,5 +1,4 @@
 #ifdef _WIN32
-#define bzero(b, len) (memset((b), '\0', (len)), (void)0)
 #define pid_t int
 #define close _close
 #include <Ws2tcpip.h>
@@ -33,7 +32,8 @@ void error()
 int main()
 {
     uint32_t sockfd;
-    char sendbuff[1024], recvbuff[1024];
+    char sendbuff[1024];
+    char recvbuff[1024];
 
     struct sockaddr_in server_addr;
 
@@ -42,7 +42,7 @@ int main()
         error();
     }
 
-    bzero(&server_addr, sizeof(server_addr));
+    memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(PORT);
     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -60,7 +60,7 @@ int main()
     {
         while (1)
         {
-            bzero(&sendbuff, sizeof(sendbuff));
+            memset(&sendbuff, 0, sizeof(sendbuff));
             printf("\nType message here: ");
             fgets(sendbuff, 1024, stdin);
             send(sockfd, sendbuff, strlen(sendbuff) + 1, 0);
@@ -72,7 +72,7 @@ int main()
     {
         while (1)
         {
-            bzero(&recvbuff, sizeof(recvbuff));
+            memset(&recvbuff, 0, sizeof(recvbuff));
             recv(sockfd, recvbuff, sizeof(recvbuff), 0);
             printf("\nSERVER: %s\n", recvbuff);
             sleep(5);

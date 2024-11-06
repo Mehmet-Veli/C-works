@@ -6,7 +6,6 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #include <winsock2.h>
-#define bzero(b, len) (memset((b), '\0', (len)), (void)0)
 #define read(a, b, c) recv(a, b, c, 0)
 #define write(a, b, c) send(a, b, c, 0)
 #define close closesocket
@@ -34,16 +33,15 @@ void func(int sockfd)
 
     for (;;)
     {
-        bzero(buff, MAX);
+        memset(buff, 0, MAX);
 
         read(sockfd, buff, sizeof(buff));
 
         printf("From client: %s\t To client : ", buff);
-        bzero(buff, MAX);
+        memset(buff, 0, MAX);
         n = 0;
         while ((buff[n++] = getchar()) != '\n')
         {
-            ;
         }
 
         write(sockfd, buff, sizeof(buff));
@@ -69,9 +67,11 @@ int main()
     atexit(cleanup);
 #endif
 
-    int sockfd, connfd;
+    int sockfd;
+    int connfd;
     unsigned int len;
-    struct sockaddr_in servaddr, cli;
+    struct sockaddr_in servaddr;
+    struct sockaddr_in cli;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1)
@@ -83,7 +83,7 @@ int main()
     {
         printf("Socket successfully created..\n");
     }
-    bzero(&servaddr, sizeof(servaddr));
+    memset(&servaddr, 0, sizeof(servaddr));
 
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);

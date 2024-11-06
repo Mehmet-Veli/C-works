@@ -1,5 +1,4 @@
 #ifdef _WIN32
-#define bzero(b, len) (memset((b), '\0', (len)), (void)0)
 #define close _close
 #include <Ws2tcpip.h>
 #include <io.h>
@@ -28,14 +27,15 @@ int main()
     uint32_t sockfd;
     struct sockaddr_in server_addr;
 
-    char serverResponse[10000], clientResponse[10000];
+    char serverResponse[10000];
+    char clientResponse[10000];
 
     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
         error();
     }
 
-    bzero(&server_addr, sizeof(server_addr));
+    memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(PORT);
     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -48,8 +48,8 @@ int main()
 
     while (1)
     {
-        bzero(&serverResponse, sizeof(serverResponse));
-        bzero(&clientResponse, sizeof(clientResponse));
+        memset(&serverResponse, 0, sizeof(serverResponse));
+        memset(&clientResponse, 0, sizeof(clientResponse));
 
         recv(sockfd, serverResponse, sizeof(serverResponse), 0);
         printf("\nServer message: %s \n", serverResponse);

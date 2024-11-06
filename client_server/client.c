@@ -6,7 +6,6 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #include <winsock2.h>
-#define bzero(b, len) (memset((b), '\0', (len)), (void)0)
 #define read(a, b, c) recv(a, b, c, 0)
 #define write(a, b, c) send(a, b, c, 0)
 #define close closesocket
@@ -27,15 +26,14 @@ void func(int sockfd)
     int n;
     for (;;)
     {
-        bzero(buff, sizeof(buff));
+        memset(buff, 0, sizeof(buff));
         printf("Enter the string : ");
         n = 0;
         while ((buff[n++] = getchar()) != '\n')
         {
-            ;
         }
         write(sockfd, buff, sizeof(buff));
-        bzero(buff, sizeof(buff));
+        memset(buff, 0, sizeof(buff));
         read(sockfd, buff, sizeof(buff));
         printf("From Server : %s", buff);
         if ((strncmp(buff, "exit", 4)) == 0)
@@ -63,8 +61,10 @@ int main()
     atexit(cleanup);
 #endif
 
-    int sockfd, connfd;
-    struct sockaddr_in servaddr, cli;
+    int sockfd;
+    int connfd;
+    struct sockaddr_in servaddr;
+    struct sockaddr_in cli;
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1)
@@ -76,7 +76,7 @@ int main()
     {
         printf("Socket successfully created..\n");
     }
-    bzero(&servaddr, sizeof(servaddr));
+    memset(&servaddr, 0, sizeof(servaddr));
 
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
