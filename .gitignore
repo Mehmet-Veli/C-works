@@ -4,3 +4,17 @@
 .vscode/
 build/
 git_diff.txt
+*.filters
+*.vcxproj
+*.sln
+CMakeCache.txt
+cmake_install.cmake
+*.log
+*.stamp
+*.stamp.list
+*.stamp.depend
+*.check_cache
+*.tlog
+*.bin
+CMakeFiles/
+output/
